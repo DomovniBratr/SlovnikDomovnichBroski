@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slovník Domovních Bratrů</title>
+    <title>Slovník Dementských Bro-kódů</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Pro moderní a zaoblený styl */
         :root {
-            --primary-color: #2a69c2; /* Modrá barva pro plus */
+            --primary-color: #2a69c2; /* Modrá barva */
             --background-color: #121212;
             --card-color: #1e1e1e;
             --text-color: #ffffff;
@@ -46,9 +46,8 @@
 
         /* --- HLAVIČKA --- */
         header {
-            /* Ponecháno grid rozložení */
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Search | Nadpis | Plus */
+            grid-template-columns: 1fr auto 1fr; /* Search | Nadpis | (Prázdné místo) */
             align-items: center;
             padding: 20px 0;
             margin-bottom: 30px;
@@ -66,12 +65,10 @@
         .search-container {
             grid-column: 1 / 2; /* Vlevo */
             justify-self: start;
-            /* Přidává mezeru vpravo, aby se nelepil na nadpis */
             margin-right: 20px; 
         }
 
         #search-input {
-            /* Zmenšená šířka na 220px */
             width: 220px; 
             padding: 10px 15px;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -89,29 +86,12 @@
             box-shadow: 0 0 10px rgba(42, 105, 194, 0.5);
         }
 
-
-        /* Tlačítko pro přidání slova (Vpravo nahoře) */
-        #add-word-btn {
-            grid-column: 3 / 4; /* Vpravo */
+        /* Prázdný element, který nahrazuje tlačítko + */
+        .empty-placeholder {
+            grid-column: 3 / 4;
             justify-self: end;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 2em;
-            line-height: 50px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(42, 105, 194, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        #add-word-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(42, 105, 194, 0.6);
-        }
 
         /* --- KARTY SE SLOVY (Tři sloupce) --- */
         .columns {
@@ -127,7 +107,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
-            /* Nové: Animace pro zvýraznění vyhledávání */
             opacity: 1;
             transition: opacity 0.3s ease-in-out;
         }
@@ -140,82 +119,7 @@
             color: var(--primary-color);
             font-weight: 600;
         }
-
-        /* --- MODAL (Vyskakovací okno pro přidání slova) --- */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none; /* Skryté defaultně */
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: var(--card-color);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-content h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            text-align: center;
-        }
-
-        .modal-content input, .modal-content textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            box-sizing: border-box;
-        }
-
-        .modal-content button {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            float: right;
-            transition: background-color 0.2s;
-        }
-
-        .modal-content button:hover {
-            background-color: #1f50a0;
-        }
-
-        .close-btn {
-            display: none;
-        }
-
-        /* Zpráva o chybě */
-        #error-message {
-            color: red;
-            margin-bottom: 15px;
-            display: none;
-            font-weight: 600;
-            text-align: center;
-        }
-
+        
         @media (max-width: 600px) {
             header {
                 grid-template-columns: 1fr 1fr;
@@ -227,14 +131,14 @@
                 order: -1;
             }
             .search-container {
-                grid-column: 1 / 2;
-                margin-right: 0; /* Odstranění marginu na malých obrazovkách */
-            }
-            #add-word-btn {
-                grid-column: 2 / 3;
+                grid-column: 1 / 3;
+                margin-right: 0;
             }
             #search-input {
                 width: 100%;
+            }
+            .empty-placeholder {
+                display: none;
             }
         }
     </style>
@@ -249,30 +153,13 @@
                 <input type="text" id="search-input" placeholder="Vyhledat kód nebo význam...">
             </div>
 
-            <h1>Slovník Domovských Bratrů 🧠</h1>
+            <h1>Slovník Dementských Bro-kódů 🧠</h1>
             
-            <button id="add-word-btn" title="Vynalezni slovo">+</button>
+            <div class="empty-placeholder"></div>
         </header>
 
         <div class="columns" id="words-container">
             </div>
-    </div>
-
-    <div id="word-modal" class="modal">
-        <div class="modal-content">
-            <h2>Vynález Nového Kódu</h2>
-            <div id="error-message"></div>
-            <form id="add-word-form">
-                <label for="new-word">Slovo/Fráze:</label>
-                <input type="text" id="new-word" name="new-word" required placeholder="Např. Kuřecí pařát">
-
-                <label for="new-meaning">Význam:</label>
-                <textarea id="new-meaning" name="new-meaning" rows="3" required placeholder="Např. Potřebuji pomoc / Konec hovoru"></textarea>
-
-                <button type="submit">Přidat kód</button>
-                <button type="button" class="close-btn">Zavřít</button>
-            </form>
-        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
@@ -296,42 +183,22 @@
             "retina_detect": true
         });
 
-        // Vlastní JavaScript pro správu slov
+        // --- JavaScript pro správu dat a vyhledávání ---
         document.addEventListener('DOMContentLoaded', () => {
             const wordsContainer = document.getElementById('words-container');
-            const addWordBtn = document.getElementById('add-word-btn');
-            const modal = document.getElementById('word-modal');
-            const form = document.getElementById('add-word-form');
             const searchInput = document.getElementById('search-input');
-            const errorMessage = document.getElementById('error-message');
 
-            // --- 1. ÚLOŽIŠTĚ A INICIALIZACE ---
-            let broCodes = JSON.parse(localStorage.getItem('broCodes')) || [
+            // TENTO SEZNAM JE JEDINÝM ZDROJEM PRAVDY. NENÍ NAPOJEN NA LOCAL STORAGE.
+            // PŘIDEJTE NEBO UPRAVTE KÓDY POUZE ZDE:
+            const broCodes = [
                 { word: "Kuřecí pařát", meaning: "Potřebuji pomoc" },
-                { word: "Zabíjím jitrocel", meaning: "Jdeme ragebaitit" },
                 { word: "Sabina paradox", meaning: "Mluvení do zdi" },
+                { word: "Zabíjím jitrocel", meaning: "Jdeme ragebaitit" },
+                // KÓDY MUSÍ BÝT VE FORMÁTU { word: "Slovo", meaning: "Význam" }
             ];
+            // Konec datového modelu.
 
-            const saveBroCodes = () => {
-                localStorage.setItem('broCodes', JSON.stringify(broCodes));
-            };
-
-            // --- 2. VALIDACE DUPLICIT ---
-            const normalize = (text) => text.toLowerCase().trim();
-
-            const isDuplicate = (newWord, newMeaning) => {
-                const nWord = normalize(newWord);
-                const nMeaning = normalize(newMeaning);
-
-                return broCodes.some(item => 
-                    // Kontrola slova (přesná nebo velmi podobná shoda)
-                    normalize(item.word) === nWord || 
-                    // Kontrola významu (přesná nebo velmi podobná shoda)
-                    normalize(item.meaning) === nMeaning
-                );
-            };
-
-            // --- 3. VYKRESLENÍ KARET ---
+            // --- 2. VYKRESLENÍ KARET ---
             const renderWords = (filteredCodes = broCodes) => {
                 wordsContainer.innerHTML = '';
                 filteredCodes.forEach(item => {
@@ -344,7 +211,9 @@
                 });
             };
 
-            // --- 4. FUNKCE VYHLEDÁVÁNÍ ---
+            // --- 3. FUNKCE VYHLEDÁVÁNÍ ---
+            const normalize = (text) => text.toLowerCase().trim();
+
             searchInput.addEventListener('input', () => {
                 const searchTerm = normalize(searchInput.value);
 
@@ -357,55 +226,9 @@
                 renderWords(filteredCodes);
             });
 
-
-            // --- 5. OBSLUHA MODALU A PŘIDÁVÁNÍ ---
-            addWordBtn.addEventListener('click', () => {
-                modal.style.display = 'flex';
-                errorMessage.style.display = 'none'; // Skrýt chybu při otevření
-            });
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    form.reset(); 
-                    errorMessage.style.display = 'none';
-                }
-            });
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const newWord = document.getElementById('new-word').value.trim();
-                const newMeaning = document.getElementById('new-meaning').value.trim();
-
-                // Validace duplicity
-                if (isDuplicate(newWord, newMeaning)) {
-                    errorMessage.textContent = 'Kód s tímto slovem nebo významem už existuje! Zkus to jinak, Bro.';
-                    errorMessage.style.display = 'block';
-                    return;
-                }
-
-                if (newWord && newMeaning) {
-                    // Přidání nového slova
-                    broCodes.push({
-                        word: newWord,
-                        meaning: newMeaning
-                    });
-
-                    saveBroCodes();
-                    renderWords(); // Překreslení se všemi slovy
-
-                    modal.style.display = 'none';
-                    form.reset();
-                    errorMessage.style.display = 'none';
-                    searchInput.value = ''; // Vyprázdnit vyhledávací pole po přidání
-                }
-            });
-
-            // Při načtení stránky vykresli slova
+            // Vykreslení při načtení stránky
             renderWords();
         });
     </script>
 </body>
-
 </html>
