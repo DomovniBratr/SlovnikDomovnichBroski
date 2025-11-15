@@ -249,7 +249,7 @@
                 <input type="text" id="search-input" placeholder="Vyhledat kód nebo význam...">
             </div>
 
-            <h1>Slovník Dementských Bro-kódů 🧠</h1>
+            <h1>Slovník Domovských Bratrů 🧠</h1>
             
             <button id="add-word-btn" title="Vynalezni slovo">+</button>
         </header>
@@ -308,6 +308,8 @@
             // --- 1. ÚLOŽIŠTĚ A INICIALIZACE ---
             let broCodes = JSON.parse(localStorage.getItem('broCodes')) || [
                 { word: "Kuřecí pařát", meaning: "Potřebuji pomoc" },
+                { word: "Zabíjím jitrocel", meaning: "Jdeme ragebaitit" },
+                { word: "Sabina paradox", meaning: "Mluvení do zdi" },
             ];
 
             const saveBroCodes = () => {
@@ -405,4 +407,5 @@
         });
     </script>
 </body>
+
 </html>
